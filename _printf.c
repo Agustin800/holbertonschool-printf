@@ -21,20 +21,20 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
+			if (*format == '\0')
+				return (-1);
+
 			if (*format == 'c' || *format == 's')
 				i += handle_char_str(*format, arg);
 			else if (*format == '%')
 				i += handle_percent();
+			else if (*format == 'd' || *format == 'i')
+				i += print_int(arg);
 			else
 			{
-				if (*(format + 1) != '\0')
-				{
 					putchar('%');
 					putchar(*format);
 					i += 2;
-				}
-				else
-					return (-1);
 			}
 		}
 		else
